@@ -1,4 +1,5 @@
 .terraform/
+.generated/
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfvars
