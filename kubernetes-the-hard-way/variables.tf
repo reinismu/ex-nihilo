@@ -8,18 +8,26 @@ variable "ssh_user" {
   description = "User used for SSHing in server `ssh root@00.00.00.00`"
 }
 
-variable "master_server_ip" {
+variable "load_balancer_public_ip" {
+  description = "IP address of your load balancer (ex. Nginx pointing to all masters)"
+}
+
+variable "master_server_ips" {
+  type        = "list"
   description = "List of all master server ips"
 }
 
 variable "master_server_hostnames" {
+  type        = "list"
   description = "List of all master server hostnames (should match with ips indecies)"
 }
 
 variable "worker_server_ips" {
+  type        = "list"
   description = "List of all worker server ips"
 }
 
 variable "worker_server_hostnames" {
+  type        = "list"
   description = "List of all worker server hostnames (should match with ips indecies)"
 }

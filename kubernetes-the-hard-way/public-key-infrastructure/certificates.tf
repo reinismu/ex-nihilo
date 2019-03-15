@@ -1,4 +1,4 @@
-module "admin-certificate" {
+module "admin_certificate" {
   source = "certificate"
 
   certificate_name                      = "admin"
@@ -9,7 +9,7 @@ module "admin-certificate" {
   certificate_authority_certificate     = "${tls_self_signed_cert.ca_certificate.cert_pem}"
 }
 
-module "controller-manager-certificate" {
+module "controller_manager_certificate" {
   source = "certificate"
 
   certificate_name                      = "controller-manager"
@@ -20,7 +20,7 @@ module "controller-manager-certificate" {
   certificate_authority_certificate     = "${tls_self_signed_cert.ca_certificate.cert_pem}"
 }
 
-module "proxy-client-certificate" {
+module "proxy_client_certificate" {
   source = "certificate"
 
   certificate_name                      = "proxy-client"
@@ -31,7 +31,7 @@ module "proxy-client-certificate" {
   certificate_authority_certificate     = "${tls_self_signed_cert.ca_certificate.cert_pem}"
 }
 
-module "scheduler-client-certificate" {
+module "scheduler_client_certificate" {
   source = "certificate"
 
   certificate_name                      = "scheduler-client"
@@ -42,7 +42,7 @@ module "scheduler-client-certificate" {
   certificate_authority_certificate     = "${tls_self_signed_cert.ca_certificate.cert_pem}"
 }
 
-module "api-server-certificate" {
+module "api_server_certificate" {
   source = "certificate"
 
   certificate_name                      = "api-server"
@@ -53,7 +53,7 @@ module "api-server-certificate" {
   certificate_authority_certificate     = "${tls_self_signed_cert.ca_certificate.cert_pem}"
 }
 
-module "service-account" {
+module "service_account_certificate" {
   source = "certificate"
 
   certificate_name                      = "service-account"
