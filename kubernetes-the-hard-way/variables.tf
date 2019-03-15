@@ -13,7 +13,7 @@ variable "master_server_ip" {
 }
 
 variable "master_server_hostnames" {
- description = "List of all master server hostnames (should match with ips indecies)"
+  description = "List of all master server hostnames (should match with ips indecies)"
 }
 
 variable "worker_server_ips" {
