@@ -11,6 +11,11 @@ variable "master_type" {
   description = "ScaleWay server type ex. C2S"
 }
 
+variable "master_count" {
+  default     = 3
+  description = "Number of masters to spawn"
+}
+
 variable "worker_type" {
   default     = "START1-S"
   description = "ScaleWay server type ex. C2S"

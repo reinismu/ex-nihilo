@@ -45,6 +45,12 @@ module "scheduler_client_certificate" {
 module "api_server_certificate" {
   source = "certificate"
 
+  ip_addresses = [
+    "${var.master_server_private_ips}",
+    "${var.load_balancer_public_ip}",
+    "127.0.0.1",
+  ]
+
   certificate_name                      = "api-server"
   certificate_common_name               = "kubernetes"
   certificate_organization              = "Kubernetes"

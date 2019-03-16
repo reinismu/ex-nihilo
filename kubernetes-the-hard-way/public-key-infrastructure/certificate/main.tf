@@ -9,6 +9,8 @@ resource "tls_cert_request" "certificate" {
   key_algorithm   = "${tls_private_key.private_key.algorithm}"
   private_key_pem = "${tls_private_key.private_key.private_key_pem}"
 
+  ip_addresses = ["${var.ip_addresses}"]
+
   subject {
     common_name         = "${var.certificate_common_name}"
     organization        = "${var.certificate_organization}"

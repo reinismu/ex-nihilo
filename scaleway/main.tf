@@ -10,14 +10,15 @@ data "scaleway_image" "xenial" {
 }
 
 resource "scaleway_ip" "master_server_ip" {
-  server = "${scaleway_server.master_server.id}"
+  count  = "${var.master_count}"
+  server = "${element(scaleway_server.master_server.*.id, count.index)}"
 }
 
 resource "scaleway_server" "master_server" {
-  count          = "1"
+  count          = "${var.master_count}"
   image          = "${data.scaleway_image.xenial.id}"
   type           = "${var.master_type}"
-  name           = "${var.prefix}-master-server"
+  name           = "${var.prefix}-master-${count.index}-server"
   security_group = "${scaleway_security_group.master_security_group.id}"
 }
 
@@ -36,14 +37,13 @@ resource "scaleway_security_group_rule" "master_accept_me" {
 }
 
 resource "scaleway_security_group_rule" "master_accept_workers" {
+  count          = "${var.worker_count}"
   security_group = "${scaleway_security_group.master_security_group.id}"
 
   action    = "accept"
   direction = "inbound"
   ip_range  = "${element(scaleway_server.worker_server.*.public_ip, count.index)}"
   protocol  = "TCP"
-
-  count = "${var.worker_count}"
 }
 
 resource "scaleway_server" "worker_server" {
@@ -70,11 +70,12 @@ resource "scaleway_security_group_rule" "worker_accept_me" {
 }
 
 resource "scaleway_security_group_rule" "worker_accept_master" {
+  count          = "${var.master_count}"
   security_group = "${scaleway_security_group.worker_security_group.id}"
 
   action    = "accept"
   direction = "inbound"
-  ip_range  = "${scaleway_ip.master_server_ip.ip}"
+  ip_range  = "${element(scaleway_ip.master_server_ip.*.ip, count.index)}"
   protocol  = "TCP"
 }
 

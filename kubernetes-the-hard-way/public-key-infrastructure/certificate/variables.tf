@@ -6,6 +6,11 @@ variable "certificate_authority_key_algorithm" {
   description = "ex. RSA"
 }
 
+variable "ip_addresses" {
+  type    = "list"
+  default = []
+}
+
 variable "certificate_common_name" {}
 
 variable "certificate_organization" {}

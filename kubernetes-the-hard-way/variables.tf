@@ -19,7 +19,12 @@ variable "master_server_ips" {
 
 variable "master_server_hostnames" {
   type        = "list"
-  description = "List of all master server hostnames (should match with ips indecies)"
+  description = "List of all master server hostnames"
+}
+
+variable "master_server_private_ips" {
+  type        = "list"
+  description = "List of all master server private ips"
 }
 
 variable "worker_server_ips" {
@@ -29,5 +34,10 @@ variable "worker_server_ips" {
 
 variable "worker_server_hostnames" {
   type        = "list"
-  description = "List of all worker server hostnames (should match with ips indecies)"
+  description = "List of all worker server hostnames"
+}
+
+variable "worker_server_private_ips" {
+  type        = "list"
+  description = "List of all worker server private ips"
 }

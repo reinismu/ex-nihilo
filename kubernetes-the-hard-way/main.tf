@@ -2,7 +2,9 @@
 module "public_key_infrastructure" {
   source = "public-key-infrastructure"
 
-  worker_server_hostnames = "${var.worker_server_hostnames}"
+  worker_server_hostnames   = "${var.worker_server_hostnames}"
+  master_server_private_ips = "${var.master_server_private_ips}"
+  load_balancer_public_ip   = "${var.load_balancer_public_ip}"
 }
 
 # Create configuration files
@@ -32,4 +34,18 @@ module "configuration_files" {
 # Create encryption config
 module "encryption_config" {
   source = "encryption-config"
+}
+
+# Start master servers with proper services and configurations
+module "master" {
+  source = "master"
+
+  ssh_private_key                   = "${var.ssh_private_key}"
+  ssh_user                          = "${var.ssh_user}"
+  server_ips                        = "${var.master_server_ips}"
+  server_hostnames                  = "${var.master_server_hostnames}"
+  server_private_ips                = "${var.master_server_private_ips}"
+  certificate_authority_certificate = "${module.public_key_infrastructure.certificate_authority_certificate}"
+  api_server_certificate            = "${module.public_key_infrastructure.api_server_certificate}"
+  api_server_private_key_pem        = "${module.public_key_infrastructure.api_server_private_key_pem}"
 }

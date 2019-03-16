@@ -17,10 +17,14 @@ variable "master_type" {
   description = "ScaleWay server type ex. C2S"
 }
 
+variable "master_count" {}
+
 variable "worker_type" {
   default     = "START1-S"
   description = "ScaleWay server type ex. C2S"
 }
+
+variable "worker_count" {}
 
 variable "prefix" {
   description = "Prefix that will be added to server names and resources"

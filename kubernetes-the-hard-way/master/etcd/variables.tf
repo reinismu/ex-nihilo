@@ -1,5 +1,5 @@
 variable "etcd_version" {
-  default = "v3.3.12"
+  default = "v3.3.9"
 }
 
 variable "ssh_private_key" {
