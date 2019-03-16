@@ -48,4 +48,6 @@ module "master" {
   certificate_authority_certificate = "${module.public_key_infrastructure.certificate_authority_certificate}"
   api_server_certificate            = "${module.public_key_infrastructure.api_server_certificate}"
   api_server_private_key_pem        = "${module.public_key_infrastructure.api_server_private_key_pem}"
+  service_account_certificate       = "${module.public_key_infrastructure.service_account_certificate}"
+  encryption_config                 = "${module.encryption_config.encryption_config}"
 }

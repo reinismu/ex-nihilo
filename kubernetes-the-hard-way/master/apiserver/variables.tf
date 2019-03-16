@@ -1,5 +1,5 @@
-variable "etcd_version" {
-  default = "v3.3.12"
+variable "kubernetes_version" {
+  default = "v1.12.0"
 }
 
 variable "ssh_private_key" {

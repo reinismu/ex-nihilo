@@ -9,6 +9,10 @@ locals {
 resource "null_resource" "etcd_binary" {
   count = "${length(var.server_ips)}"
 
+  triggers = {
+    etcd_version = "${var.etcd_version}"
+  }
+
   connection {
     type = "ssh"
     user = "${var.ssh_user}"
@@ -48,6 +52,11 @@ resource "local_file" "etcd_config" {
 # Configure the etcd server
 resource "null_resource" "etcd_server" {
   count = "${length(var.server_ips)}"
+
+  triggers = {
+    rendered_content = "${data.template_file.etcd_service_template.*.rendered[count.index]}"
+    binary           = "${null_resource.etcd_binary.*.id[count.index]}"
+  }
 
   depends_on = ["local_file.etcd_config"]
 
