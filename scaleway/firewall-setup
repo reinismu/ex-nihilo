@@ -1,0 +1,11 @@
+#!/bin/bash -x
+
+sudo apt update 
+sudo apt -y install ufw
+
+sudo ufw default deny
+sudo ufw default allow outgoing
+
+sudo ufw allow OpenSSH
+
+sudo ufw enable

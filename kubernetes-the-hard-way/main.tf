@@ -36,6 +36,14 @@ module "encryption_config" {
   source = "encryption-config"
 }
 
+module "load_balancer" {
+  source = "load-balancer"
+
+  ssh_user                = "${var.ssh_user}"
+  load_balancer_public_ip = "${var.load_balancer_public_ip}"
+  master_private_ips      = "${var.master_server_private_ips}"
+}
+
 # Start master servers with proper services and configurations
 module "master" {
   source = "master"
