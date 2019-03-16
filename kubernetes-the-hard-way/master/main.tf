@@ -25,3 +25,16 @@ module "apiserver" {
   service_account_certificate       = "${var.service_account_certificate}"
   encryption_config                 = "${var.encryption_config}"
 }
+
+module "controller_manager" {
+  source = "controller-manager"
+
+  ssh_private_key                       = "${var.ssh_private_key}"
+  ssh_user                              = "${var.ssh_user}"
+  server_ips                            = "${var.server_ips}"
+  server_hostnames                      = "${var.server_hostnames}"
+  certificate_authority_certificate     = "${var.certificate_authority_certificate}"
+  certificate_authority_private_key_pem = "${var.certificate_authority_private_key_pem}"
+  service_account_private_key_pem       = "${var.service_account_private_key_pem}"
+  controller_manager_config             = "${var.controller_manager_config}"
+}

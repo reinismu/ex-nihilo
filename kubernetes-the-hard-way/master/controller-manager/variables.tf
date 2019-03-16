@@ -1,5 +1,5 @@
-variable "etcd_version" {
-  default = "v3.3.12"
+variable "kubernetes_version" {
+  default = "v1.12.0"
 }
 
 variable "ssh_private_key" {
@@ -22,23 +22,10 @@ variable "server_hostnames" {
   description = "List of server hostnames"
 }
 
-variable "server_private_ips" {
-  type        = "list"
-  description = "List of server private ips"
-}
-
 variable "certificate_authority_certificate" {}
 
 variable "certificate_authority_private_key_pem" {}
 
-variable "api_server_certificate" {}
-
-variable "api_server_private_key_pem" {}
-
-variable "service_account_certificate" {}
-
 variable "service_account_private_key_pem" {}
-
-variable "encryption_config" {}
 
 variable "controller_manager_config" {}
