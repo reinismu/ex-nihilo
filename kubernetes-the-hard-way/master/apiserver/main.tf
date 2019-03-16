@@ -9,16 +9,17 @@ locals {
 
 # Download apiserver binary
 resource "null_resource" "apiserver_binary" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     version = "${var.kubernetes_version}"
   }
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -31,7 +32,7 @@ resource "null_resource" "apiserver_binary" {
 }
 
 data "template_file" "apiserver_service_template" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   template = "${file("${path.module}/apiserver.service.tpl")}"
 
@@ -47,14 +48,14 @@ data "template_file" "apiserver_service_template" {
 }
 
 resource "local_file" "apiserver_config" {
-  count    = "${length(var.server_ips)}"
+  count    = "${length(var.server_private_ips)}"
   content  = "${data.template_file.apiserver_service_template.*.rendered[count.index]}"
   filename = "./.generated/${element(var.server_hostnames, count.index)}.apiserver.service"
 }
 
 # Configure the apiserver server
 resource "null_resource" "apiserver_server" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     rendered_content = "${data.template_file.apiserver_service_template.*.rendered[count.index]}"
@@ -64,9 +65,10 @@ resource "null_resource" "apiserver_server" {
   depends_on = ["local_file.apiserver_config"]
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -110,7 +112,7 @@ resource "null_resource" "apiserver_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kube-apiserver",
       "sudo systemctl start kube-apiserver",
-      "sleep 15 && [ $(systemctl show -p SubState kube-apiserver | cut -d'=' -f2) == 'running' ] && echo succcess",
+      "sleep 15 && [ $(systemctl show -p SubState kube-apiserver | cut -d'=' -f2) = 'running' ] && echo succcess",
     ]
   }
 }

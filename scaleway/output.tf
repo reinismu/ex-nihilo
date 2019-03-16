@@ -1,5 +1,5 @@
-output "master_ips" {
-  value = "${scaleway_ip.master_server_ip.*.ip}"
+output "external_ip" {
+  value = "${scaleway_ip.loadbalancer_server_ip.ip}"
 }
 
 output "master_hostnames" {
@@ -12,10 +12,6 @@ output "master_private_ips" {
 
 output "master_private_dns" {
   value = "${formatlist("%s.priv.cloud.scaleway.com",scaleway_server.master_server.*.id)}"
-}
-
-output "worker_ips" {
-  value = "${scaleway_server.worker_server.*.public_ip}"
 }
 
 output "worker_private_dns" {

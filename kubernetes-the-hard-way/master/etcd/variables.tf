@@ -12,19 +12,18 @@ variable "ssh_user" {
   description = "User used for SSHing in server `ssh root@00.00.00.00`"
 }
 
-variable "server_ips" {
-  type        = "list"
-  description = "List of server ip addresses"
-}
-
-variable "server_hostnames" {
-  type        = "list"
-  description = "List of server hostnames"
+variable "load_balancer_public_ip" {
+  description = "IP used to bastion in other hosts"
 }
 
 variable "server_private_ips" {
   type        = "list"
   description = "List of server private ips"
+}
+
+variable "server_hostnames" {
+  type        = "list"
+  description = "List of server hostnames"
 }
 
 variable "certificate_authority_certificate" {}

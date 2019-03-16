@@ -12,11 +12,6 @@ variable "load_balancer_public_ip" {
   description = "IP address of your load balancer (ex. Nginx pointing to all masters)"
 }
 
-variable "master_server_ips" {
-  type        = "list"
-  description = "List of all master server ips"
-}
-
 variable "master_server_hostnames" {
   type        = "list"
   description = "List of all master server hostnames"
@@ -25,11 +20,6 @@ variable "master_server_hostnames" {
 variable "master_server_private_ips" {
   type        = "list"
   description = "List of all master server private ips"
-}
-
-variable "worker_server_ips" {
-  type        = "list"
-  description = "List of all worker server ips"
 }
 
 variable "worker_server_hostnames" {

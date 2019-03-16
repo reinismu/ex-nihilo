@@ -8,16 +8,17 @@ locals {
 
 # Download controller-manager binary
 resource "null_resource" "controller_manager_binary" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     version = "${var.kubernetes_version}"
   }
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -41,14 +42,14 @@ data "template_file" "controller_manager_service_template" {
 }
 
 resource "local_file" "controller_manager_config" {
-  count    = "${length(var.server_ips)}"
+  count    = "${length(var.server_private_ips)}"
   content  = "${data.template_file.controller_manager_service_template.rendered}"
   filename = "./.generated/${element(var.server_hostnames, count.index)}.controller_manager.service"
 }
 
 # Configure the controller_manager server
 resource "null_resource" "controller_manager_server" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     rendered_content = "${data.template_file.controller_manager_service_template.rendered}"
@@ -58,9 +59,10 @@ resource "null_resource" "controller_manager_server" {
   depends_on = ["local_file.controller_manager_config"]
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -99,7 +101,7 @@ resource "null_resource" "controller_manager_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kube-controller-manager",
       "sudo systemctl start kube-controller-manager",
-      "sleep 15 && [ $(systemctl show -p SubState kube-controller-manager | cut -d'=' -f2) == 'running' ]  && echo succcess",
+      "sleep 15 && [ $(systemctl show -p SubState kube-controller-manager | cut -d'=' -f2) = 'running' ]  && echo succcess",
     ]
   }
 }

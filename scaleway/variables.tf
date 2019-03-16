@@ -6,6 +6,11 @@ variable "region" {
   default = "ams1"
 }
 
+variable "loadbalancer_type" {
+  default     = "START1-S"
+  description = "ScaleWay server type ex. C2S"
+}
+
 variable "master_type" {
   default     = "START1-S"
   description = "ScaleWay server type ex. C2S"

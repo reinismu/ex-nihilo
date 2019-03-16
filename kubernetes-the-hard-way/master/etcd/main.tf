@@ -7,16 +7,17 @@ locals {
 
 # Download etcd binary
 resource "null_resource" "etcd_binary" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     etcd_version = "${var.etcd_version}"
   }
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -29,7 +30,7 @@ resource "null_resource" "etcd_binary" {
 }
 
 data "template_file" "etcd_service_template" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   template = "${file("${path.module}/etcd.service.tpl")}"
 
@@ -44,14 +45,14 @@ data "template_file" "etcd_service_template" {
 }
 
 resource "local_file" "etcd_config" {
-  count    = "${length(var.server_ips)}"
+  count    = "${length(var.server_private_ips)}"
   content  = "${data.template_file.etcd_service_template.*.rendered[count.index]}"
   filename = "./.generated/${element(var.server_hostnames, count.index)}.etcd.service"
 }
 
 # Configure the etcd server
 resource "null_resource" "etcd_server" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     rendered_content = "${data.template_file.etcd_service_template.*.rendered[count.index]}"
@@ -61,9 +62,10 @@ resource "null_resource" "etcd_server" {
   depends_on = ["local_file.etcd_config"]
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {

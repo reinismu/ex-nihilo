@@ -6,16 +6,17 @@ locals {
 
 # Download controller-manager binary
 resource "null_resource" "scheduler_binary" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     version = "${var.kubernetes_version}"
   }
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -44,20 +45,20 @@ data "template_file" "scheduler_service_template" {
 }
 
 resource "local_file" "scheduler_config" {
-  count    = "${length(var.server_ips)}"
+  count    = "${length(var.server_private_ips)}"
   content  = "${data.template_file.scheduler_service_template.rendered}"
   filename = "./.generated/${element(var.server_hostnames, count.index)}.scheduler.service"
 }
 
 resource "local_file" "scheduler" {
-  count    = "${length(var.server_ips)}"
+  count    = "${length(var.server_private_ips)}"
   content  = "${data.template_file.scheduler_template.rendered}"
   filename = "./.generated/${element(var.server_hostnames, count.index)}.scheduler.yaml"
 }
 
 # Configure the scheduler server
 resource "null_resource" "scheduler_server" {
-  count = "${length(var.server_ips)}"
+  count = "${length(var.server_private_ips)}"
 
   triggers = {
     config_rendered_content  = "${data.template_file.scheduler_template.rendered}"
@@ -68,9 +69,10 @@ resource "null_resource" "scheduler_server" {
   depends_on = ["local_file.scheduler_config"]
 
   connection {
-    type = "ssh"
-    user = "${var.ssh_user}"
-    host = "${element(var.server_ips, count.index)}"
+    type         = "ssh"
+    user         = "${var.ssh_user}"
+    host         = "${element(var.server_private_ips, count.index)}"
+    bastion_host = "${var.load_balancer_public_ip}"
   }
 
   provisioner "remote-exec" {
@@ -99,7 +101,7 @@ resource "null_resource" "scheduler_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kube-scheduler",
       "sudo systemctl start kube-scheduler",
-      "sleep 15 && [ $(systemctl show -p SubState kube-scheduler | cut -d'=' -f2) == 'running' ] && echo succcess",
+      "sleep 15 && [ $(systemctl show -p SubState kube-scheduler | cut -d'=' -f2) = 'running' ] && echo succcess",
     ]
   }
 }

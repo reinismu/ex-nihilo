@@ -12,9 +12,13 @@ variable "ssh_user" {
   description = "User used for SSHing in server `ssh root@00.00.00.00`"
 }
 
-variable "server_ips" {
+variable "load_balancer_public_ip" {
+  description = "IP used to bastion in other hosts"
+}
+
+variable "server_private_ips" {
   type        = "list"
-  description = "List of server ip addresses"
+  description = "List of server private ips"
 }
 
 variable "server_hostnames" {
@@ -29,3 +33,6 @@ variable "certificate_authority_private_key_pem" {}
 variable "service_account_private_key_pem" {}
 
 variable "controller_manager_config" {}
+
+# Used to make sure that this is run after etcd has been setup
+variable "etcd_id" {}

@@ -12,9 +12,8 @@ variable "ssh_user" {
   description = "User used for SSHing in server `ssh root@00.00.00.00`"
 }
 
-variable "server_ips" {
-  type        = "list"
-  description = "List of server ip addresses"
+variable "load_balancer_public_ip" {
+  description = "IP used to bastian in other hosts"
 }
 
 variable "server_hostnames" {

@@ -42,7 +42,7 @@ module "master" {
 
   ssh_private_key                       = "${var.ssh_private_key}"
   ssh_user                              = "${var.ssh_user}"
-  server_ips                            = "${var.master_server_ips}"
+  load_balancer_public_ip               = "${var.load_balancer_public_ip}"
   server_hostnames                      = "${var.master_server_hostnames}"
   server_private_ips                    = "${var.master_server_private_ips}"
   certificate_authority_certificate     = "${module.public_key_infrastructure.certificate_authority_certificate}"
