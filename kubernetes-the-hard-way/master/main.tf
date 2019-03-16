@@ -38,3 +38,13 @@ module "controller_manager" {
   service_account_private_key_pem       = "${var.service_account_private_key_pem}"
   controller_manager_config             = "${var.controller_manager_config}"
 }
+
+module "scheduler" {
+  source = "scheduler"
+
+  ssh_private_key         = "${var.ssh_private_key}"
+  ssh_user                = "${var.ssh_user}"
+  server_ips              = "${var.server_ips}"
+  server_hostnames        = "${var.server_hostnames}"
+  scheduler_client_config = "${var.scheduler_client_config}"
+}

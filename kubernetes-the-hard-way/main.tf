@@ -53,4 +53,5 @@ module "master" {
   service_account_private_key_pem       = "${module.public_key_infrastructure.service_account_private_key_pem}"
   encryption_config                     = "${module.encryption_config.encryption_config}"
   controller_manager_config             = "${module.configuration_files.controller_manager_config}"
+  scheduler_client_config               = "${module.configuration_files.scheduler_client_config}"
 }

@@ -99,7 +99,7 @@ resource "null_resource" "controller_manager_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kube-controller-manager",
       "sudo systemctl start kube-controller-manager",
-      "sleep 15 && [ $(systemctl show -p SubState kube-controller-manager | cut -d'=' -f2) != 'running' ] && exit 1",
+      "sleep 15 && [ $(systemctl show -p SubState kube-controller-manager | cut -d'=' -f2) == 'running' ]  && echo succcess",
     ]
   }
 }

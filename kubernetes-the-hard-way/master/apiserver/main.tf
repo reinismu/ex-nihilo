@@ -110,7 +110,7 @@ resource "null_resource" "apiserver_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable kube-apiserver",
       "sudo systemctl start kube-apiserver",
-      "sleep 15 && [ $(systemctl show -p SubState kube-apiserver | cut -d'=' -f2) != 'running' ] && exit 1",
+      "sleep 15 && [ $(systemctl show -p SubState kube-apiserver | cut -d'=' -f2) == 'running' ] && echo succcess",
     ]
   }
 }

@@ -42,3 +42,5 @@ variable "service_account_private_key_pem" {}
 variable "encryption_config" {}
 
 variable "controller_manager_config" {}
+
+variable "scheduler_client_config" {}
