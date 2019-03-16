@@ -98,6 +98,7 @@ module "ip" {
 module "firewall" {
   source = "firewall-reinforce"
 
+  my_ip                   = "${module.ip.cidr}"
   load_balancer_public_ip = "${scaleway_server.loadbalancer.public_ip}"
 
   server_private_ips = [
