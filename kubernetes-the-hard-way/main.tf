@@ -63,3 +63,11 @@ module "master" {
   controller_manager_config             = "${module.configuration_files.controller_manager_config}"
   scheduler_client_config               = "${module.configuration_files.scheduler_client_config}"
 }
+
+module "worker" {
+  source = "worker"
+
+  ssh_user                = "${var.ssh_user}"
+  load_balancer_public_ip = "${var.load_balancer_public_ip}"
+  server_private_ips      = "${var.worker_server_private_ips}"
+}

@@ -1,7 +1,3 @@
-variable "etcd_version" {
-  default = "v3.3.12"
-}
-
 variable "ssh_private_key" {
   type        = "string"
   description = "The path to your private key (ex. /.ssh/id_rsa)"
