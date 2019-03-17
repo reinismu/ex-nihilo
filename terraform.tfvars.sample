@@ -1,0 +1,26 @@
+# Scaleway Token
+scw_token = "00000-0000-0000-0000-0000000000"
+
+# Scaleway Organization ID
+scw_org = "00000-0000-0000-0000-0000000000"
+
+# Resources will be prefixed with this to avoid clashing names
+prefix = "cloud-smth"
+
+# Region where resources should be created
+region = "ams1"
+
+# Scaleway instance type
+master_type = "START1-S"
+
+# Scaleway instance type
+worker_type = "START1-S"
+
+# Path to scaleway private key
+ssh_private_key = "~/.ssh/scaleway-dedi-private-key"
+
+# Master node count
+master_count = "1"
+
+# Worker node count
+worker_count = "1"

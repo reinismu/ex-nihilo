@@ -13,5 +13,6 @@ As we are using terraform and it is not best tool for software you will need to 
 
 ## Unresolved issues
 
+ * Scaleway could-init is 50/50 so have to do firewall config again
  * DNS doesn't want to work as it should.
  * Terraform run condition (aka. cant build whole thing in one run)
