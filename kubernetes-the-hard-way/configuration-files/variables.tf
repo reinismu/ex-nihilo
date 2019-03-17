@@ -2,6 +2,8 @@ variable "load_balancer_public_ip" {
   description = "IP address of your load balancer (ex. Nginx pointing to all masters)"
 }
 
+variable "load_balancer_private_ip" {}
+
 variable "certificate_authority_certificate" {}
 
 variable "worker_server_hostnames" {

@@ -40,7 +40,7 @@ resource "null_resource" "load_balancer" {
 }
 
 resource "null_resource" "server" {
-  count = "${length(var.server_private_ips)}"
+  count = "${var.server_count}"
 
   connection {
     type         = "ssh"

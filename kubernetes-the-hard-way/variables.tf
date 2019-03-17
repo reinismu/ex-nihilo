@@ -12,6 +12,8 @@ variable "load_balancer_public_ip" {
   description = "IP address of your load balancer (ex. Nginx pointing to all masters)"
 }
 
+variable "load_balancer_private_ip" {}
+
 variable "master_server_hostnames" {
   type        = "list"
   description = "List of all master server hostnames"

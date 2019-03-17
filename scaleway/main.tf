@@ -101,6 +101,8 @@ module "firewall" {
   my_ip                   = "${module.ip.cidr}"
   load_balancer_public_ip = "${scaleway_server.loadbalancer.public_ip}"
 
+  server_count = "${var.master_count + var.worker_count}"
+
   server_private_ips = [
     "${scaleway_server.master_server.*.private_ip}",
     "${scaleway_server.worker_server.*.private_ip}",

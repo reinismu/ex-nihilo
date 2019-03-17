@@ -15,9 +15,10 @@ module "scaleway" {
 module "kubernetes" {
   source = "kubernetes-the-hard-way"
 
-  ssh_private_key         = "${var.ssh_private_key}"
-  ssh_user                = "root"
-  load_balancer_public_ip = "${module.scaleway.external_ip}"
+  ssh_private_key          = "${var.ssh_private_key}"
+  ssh_user                 = "root"
+  load_balancer_public_ip  = "${module.scaleway.external_ip}"
+  load_balancer_private_ip = "${module.scaleway.load_balancer_private_ip}"
 
   master_server_hostnames   = "${module.scaleway.master_hostnames}"
   master_server_private_ips = "${module.scaleway.master_private_ips}"

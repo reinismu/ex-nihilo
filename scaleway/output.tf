@@ -2,6 +2,10 @@ output "external_ip" {
   value = "${scaleway_ip.loadbalancer_server_ip.ip}"
 }
 
+output "load_balancer_private_ip" {
+  value = "${scaleway_server.loadbalancer.private_ip}"
+}
+
 output "master_hostnames" {
   value = "${scaleway_server.master_server.*.name}"
 }

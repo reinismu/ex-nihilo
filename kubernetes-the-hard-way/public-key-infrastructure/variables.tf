@@ -11,3 +11,5 @@ variable "master_server_private_ips" {
 variable "load_balancer_public_ip" {
   description = "List of all master ips"
 }
+
+variable "load_balancer_private_ip" {}

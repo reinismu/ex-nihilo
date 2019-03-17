@@ -1,5 +1,5 @@
-variable "runc_version" {
-  default = "v1.0.0-rc5"
+variable "cni_version" {
+  default = "v0.6.0"
 }
 
 variable "ssh_user" {

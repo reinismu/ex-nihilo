@@ -48,6 +48,7 @@ module "api_server_certificate" {
   ip_addresses = [
     "${var.master_server_private_ips}",
     "${var.load_balancer_public_ip}",
+    "${var.load_balancer_private_ip}",
     "127.0.0.1",
   ]
 

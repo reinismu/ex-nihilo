@@ -2,7 +2,7 @@ apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: ${certificate_authority_certificate}
-    server: https://${load_balancer_public_ip}:6443
+    server: https://${load_balancer_private_ip}:6443
   name: kubernetes-the-hard-way
 contexts:
 - context:

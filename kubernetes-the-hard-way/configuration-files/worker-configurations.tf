@@ -7,7 +7,7 @@ data "template_file" "worker_config_template" {
     certificate_authority_certificate = "${base64encode(var.certificate_authority_certificate)}"
     worker_server_certificate         = "${base64encode(element(var.worker_server_certificates, count.index))}"
     worker_server_private_key         = "${base64encode(element(var.worker_server_private_keys, count.index))}"
-    load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+    load_balancer_private_ip          = "${var.load_balancer_private_ip}"
     worker_hostname                   = "${element(var.worker_server_hostnames, count.index)}"
   }
 }

@@ -5,6 +5,7 @@ module "public_key_infrastructure" {
   worker_server_hostnames   = "${var.worker_server_hostnames}"
   master_server_private_ips = "${var.master_server_private_ips}"
   load_balancer_public_ip   = "${var.load_balancer_public_ip}"
+  load_balancer_private_ip  = "${var.load_balancer_private_ip}"
 }
 
 # Create configuration files
@@ -12,6 +13,7 @@ module "configuration_files" {
   source = "configuration-files"
 
   load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+  load_balancer_private_ip          = "${var.load_balancer_private_ip}"
   certificate_authority_certificate = "${module.public_key_infrastructure.certificate_authority_certificate}"
 
   worker_server_hostnames    = "${var.worker_server_hostnames}"
@@ -67,7 +69,12 @@ module "master" {
 module "worker" {
   source = "worker"
 
-  ssh_user                = "${var.ssh_user}"
-  load_balancer_public_ip = "${var.load_balancer_public_ip}"
-  server_private_ips      = "${var.worker_server_private_ips}"
+  ssh_user                          = "${var.ssh_user}"
+  load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+  server_private_ips                = "${var.worker_server_private_ips}"
+  worker_certificates               = "${module.public_key_infrastructure.worker_certificates}"
+  worker_private_keys               = "${module.public_key_infrastructure.worker_private_key_pems}"
+  worker_configs                    = "${module.configuration_files.worker_configs}"
+  kube_proxy_config                 = "${module.configuration_files.kube_proxy_config}"
+  certificate_authority_certificate = "${module.public_key_infrastructure.certificate_authority_certificate}"
 }
