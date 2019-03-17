@@ -33,5 +33,4 @@ variable "worker_configs" {
   description = "List of worker private keys"
 }
 
-variable "pod_cidr_mask" {
-}
+variable "pod_cidr_mask" {}

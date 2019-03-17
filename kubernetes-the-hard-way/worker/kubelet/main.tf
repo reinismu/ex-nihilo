@@ -35,11 +35,11 @@ resource "null_resource" "kublet_binary" {
 }
 
 data "template_file" "kubelet_config_template" {
-  count = "${length(var.server_private_ips)}"
+  count    = "${length(var.server_private_ips)}"
   template = "${file("${path.module}/kublet-config.yaml.tpl")}"
 
   vars {
-    POD_CIDR = "${format(var.pod_cidr_mask, count.index)}"
+    POD_CIDR                = "${format(var.pod_cidr_mask, count.index)}"
     WORKER_CERT_PATH        = "${local.worker_cert_dest}"
     WORKER_PRIVATE_KEY_PATH = "${local.worker_private_key_dest}"
     CA_CERT_PATH            = "${local.ca_cert_dest}"
@@ -122,9 +122,11 @@ resource "null_resource" "kubelet_server" {
   provisioner "remote-exec" {
     inline = [
       "sudo systemctl daemon-reload",
+
       # "sudo systemctl enable systemd-resolved", # to generate /run/systemd/resolve/resolv.conf
       # "sudo systemctl restart systemd-resolved",
       "sudo systemctl enable kubelet",
+
       "sudo systemctl restart kubelet",
       "sleep 15 && [ $(systemctl show -p SubState kubelet | cut -d'=' -f2) = 'running' ]  && echo succcess",
     ]

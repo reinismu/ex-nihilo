@@ -16,6 +16,4 @@ variable "server_private_ips" {
   description = "List of server private ips"
 }
 
-
-variable "pod_cidr_mask" {
-}
+variable "pod_cidr_mask" {}

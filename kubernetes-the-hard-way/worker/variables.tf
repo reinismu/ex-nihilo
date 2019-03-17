@@ -32,5 +32,5 @@ variable "certificate_authority_certificate" {}
 variable "kube_proxy_config" {}
 
 variable "pod_cidr_mask" {
-   default = "192.168.%s.0/16"
+  default = "192.168.%s.0/16"
 }

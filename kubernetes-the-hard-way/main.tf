@@ -77,5 +77,5 @@ module "worker" {
   worker_configs                    = "${module.configuration_files.worker_configs}"
   kube_proxy_config                 = "${module.configuration_files.kube_proxy_config}"
   certificate_authority_certificate = "${module.public_key_infrastructure.certificate_authority_certificate}"
-  pod_cidr_mask  ="192.168.%d.0/16"
+  pod_cidr_mask                     = "192.168.%d.0/16"
 }

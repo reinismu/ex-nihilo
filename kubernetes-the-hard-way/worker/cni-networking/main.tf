@@ -31,7 +31,7 @@ resource "null_resource" "cni_binary" {
 }
 
 data "template_file" "bridge_conf_template" {
-  count = "${length(var.server_private_ips)}"
+  count    = "${length(var.server_private_ips)}"
   template = "${file("${path.module}/10-bridge.conf.tpl")}"
 
   vars {
