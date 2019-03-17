@@ -1,10 +1,10 @@
-module "cni_netowkring" {
+module "cni_netwokring" {
   source = "cni-networking"
 
   ssh_user                = "${var.ssh_user}"
   load_balancer_public_ip = "${var.load_balancer_public_ip}"
   server_private_ips      = "${var.server_private_ips}"
-  pod_cidr                = "${var.pod_cidr}"
+  pod_cidr_mask               = "${var.pod_cidr_mask}"
 }
 
 module "containerd" {
@@ -25,7 +25,7 @@ module "kubelet" {
   worker_certificates               = "${var.worker_certificates}"
   worker_private_keys               = "${var.worker_private_keys}"
   worker_configs                    = "${var.worker_configs}"
-  pod_cidr                          = "${var.pod_cidr}"
+  pod_cidr_mask               = "${var.pod_cidr_mask}"
 }
 
 module "kube_proxy" {
@@ -35,5 +35,4 @@ module "kube_proxy" {
   load_balancer_public_ip = "${var.load_balancer_public_ip}"
   server_private_ips      = "${var.server_private_ips}"
   kube_proxy_config       = "${var.kube_proxy_config}"
-  pod_cidr                = "${var.pod_cidr}"
 }

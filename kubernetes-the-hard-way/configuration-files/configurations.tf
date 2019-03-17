@@ -1,7 +1,7 @@
 module "proxy_client" {
   source = "configuration"
 
-  load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+  load_balancer_public_ip           = "${var.load_balancer_private_ip}"
   certificate_authority_certificate = "${var.certificate_authority_certificate}"
   config_name                       = "proxy-client"
   context_user                      = "kube-proxy"
@@ -13,7 +13,7 @@ module "proxy_client" {
 module "controller_manager" {
   source = "configuration"
 
-  load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+  load_balancer_public_ip           = "${var.load_balancer_private_ip}"
   certificate_authority_certificate = "${var.certificate_authority_certificate}"
   config_name                       = "controller-manager"
   context_user                      = "system:kube-controller-manager"
@@ -25,7 +25,7 @@ module "controller_manager" {
 module "scheduler_client" {
   source = "configuration"
 
-  load_balancer_public_ip           = "${var.load_balancer_public_ip}"
+  load_balancer_public_ip           = "${var.load_balancer_private_ip}"
   certificate_authority_certificate = "${var.certificate_authority_certificate}"
   config_name                       = "scheduler-client"
   context_user                      = "system:kube-scheduler"

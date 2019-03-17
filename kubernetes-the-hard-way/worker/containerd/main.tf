@@ -91,7 +91,7 @@ resource "null_resource" "containerd_server" {
       "sudo systemctl daemon-reload",
       "sudo systemctl enable containerd",
       "sudo systemctl start containerd",
-      "sleep 15 && [ $(systemctl show -p SubState containerd | cut -d'=' -f2) = 'running' ]  && echo succcess",
+      "sleep 25 && [ $(systemctl show -p SubState containerd | cut -d'=' -f2) = 'running' ]  && echo succcess",
     ]
   }
 }

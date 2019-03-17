@@ -31,10 +31,11 @@ resource "null_resource" "cni_binary" {
 }
 
 data "template_file" "bridge_conf_template" {
+  count = "${length(var.server_private_ips)}"
   template = "${file("${path.module}/10-bridge.conf.tpl")}"
 
   vars {
-    POD_CIDR = "${var.pod_cidr}"
+    POD_CIDR = "${format(var.pod_cidr_mask, count.index)}"
   }
 }
 
@@ -43,7 +44,7 @@ data "template_file" "loopback_conf_template" {
 }
 
 resource "local_file" "bridge_conf" {
-  content  = "${data.template_file.bridge_conf_template.rendered}"
+  content  = "${data.template_file.bridge_conf_template.*.rendered[count.index]}"
   filename = "./.generated/10-bridge.conf"
 }
 
@@ -57,7 +58,7 @@ resource "null_resource" "cni_server" {
   count = "${length(var.server_private_ips)}"
 
   triggers = {
-    rendered_config  = "${data.template_file.bridge_conf_template.id}"
+    rendered_config  = "${data.template_file.bridge_conf_template.*.rendered[count.index]}"
     rendered_service = "${data.template_file.loopback_conf_template.id}"
   }
 
@@ -77,7 +78,7 @@ resource "null_resource" "cni_server" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.bridge_conf_template.rendered}"
+    content     = "${data.template_file.bridge_conf_template.*.rendered[count.index]}"
     destination = "${local.bridge_conf_dest}"
   }
 

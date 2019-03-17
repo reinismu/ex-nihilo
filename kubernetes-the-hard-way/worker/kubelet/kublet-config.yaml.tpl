@@ -13,7 +13,6 @@ clusterDomain: "cluster.local"
 clusterDNS:
   - "10.32.0.10"
 podCIDR: "${POD_CIDR}"
-resolvConf: "/run/systemd/resolve/resolv.conf"
 runtimeRequestTimeout: "15m"
 tlsCertFile: "${WORKER_CERT_PATH}"
 tlsPrivateKeyFile: "${WORKER_PRIVATE_KEY_PATH}"

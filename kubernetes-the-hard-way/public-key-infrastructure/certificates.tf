@@ -50,6 +50,10 @@ module "api_server_certificate" {
     "${var.load_balancer_public_ip}",
     "${var.load_balancer_private_ip}",
     "127.0.0.1",
+    "10.32.0.1",
+    "10.240.0.10",
+    "10.240.0.11",
+    "10.240.0.12",
   ]
 
   certificate_name                      = "api-server"

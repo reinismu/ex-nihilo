@@ -15,7 +15,3 @@ variable "server_private_ips" {
   type        = "list"
   description = "List of server private ips"
 }
-
-variable "pod_cidr" {
-  default = "192.168.0.0/16"
-}
